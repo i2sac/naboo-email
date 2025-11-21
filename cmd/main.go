@@ -12,11 +12,12 @@ import (
 	"time"
 
 	_ "github.com/joho/godotenv/autoload"
+	pb "github.com/lodjim/naboo-email/internal/email"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/health"
+	"google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/status"
-
-	pb "github.com/lodjim/naboo-email/internal/email"
 )
 
 var (
@@ -123,7 +124,6 @@ func (es *EmailService) SendEmailToClient(emailFrom, emailTo, subject, body stri
 	}
 	defer es.releaseClient(client)
 
-	// Set timeout for SMTP operations
 	ctx, cancel := context.WithTimeout(context.Background(), es.timeout)
 	defer cancel()
 
@@ -199,6 +199,10 @@ func main() {
 	emailService := NewEmailService(smtpHost, smtpPort, emailFrom, emailPassword, poolSize)
 	s := grpc.NewServer()
 	pb.RegisterEmailServer(s, &server{emailService: emailService})
+
+	healthServer := health.NewServer()
+	healthServer.SetServingStatus("", grpc_health_v1.HealthCheckResponse_SERVING)
+	grpc_health_v1.RegisterHealthServer(s, healthServer)
 
 	log.Printf("Server running on :50051 with %d SMTP connections in pool", poolSize)
 	if err := s.Serve(lis); err != nil {
