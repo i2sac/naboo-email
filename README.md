@@ -1,10 +1,10 @@
 
 # Naboo Email Server
 
-[![Docker Image](https://img.shields.io/docker/v/cifope/naboo-email?label=docker&logo=docker)](https://hub.docker.com/r/cifope/naboo-email)
-[![Docker Image Size](https://img.shields.io/docker/image-size/cifope/naboo-email/latest)](https://hub.docker.com/r/cifope/naboo-email)
-[![Docker Pulls](https://img.shields.io/docker/pulls/cifope/naboo-email)](https://hub.docker.com/r/cifope/naboo-email)
-[![License](https://img.shields.io/github/license/lodjim/naboo-email)](LICENSE)
+[![Docker Image](https://img.shields.io/docker/v/isaacpeterson/naboomail?label=docker&logo=docker)](https://hub.docker.com/r/isaacpeterson/naboomail)
+[![Docker Image Size](https://img.shields.io/docker/image-size/isaacpeterson/naboomail/latest)](https://hub.docker.com/r/isaacpeterson/naboomail)
+[![Docker Pulls](https://img.shields.io/docker/pulls/isaacpeterson/naboomail)](https://hub.docker.com/r/isaacpeterson/naboomail)
+[![License](https://img.shields.io/github/license/i2sac/naboo-email)](LICENSE)
 
 The Naboo Email Server is a gRPC-based Go application for securely sending emails via SMTP with TLS encryption. It incorporates an SMTP client connection pooling mechanism to enhance performance, reliability, and scalability. Ideal for public use, the project is open-source on GitHub.
 
@@ -31,29 +31,32 @@ The Naboo Email Server is a gRPC-based Go application for securely sending email
 
 ## Quick Start with Docker
 
-The fastest way to get started is using our pre-built Docker images:
+The fastest way to get started is using the pre-built Docker images from Docker Hub.
+
+Always specify a tag when pulling the image (for example `:latest` or a specific version like `:v1.0.0`).
 
 ```bash
 # Pull the latest image
-docker pull cifope/naboo-email:latest
+docker pull isaacpeterson/naboomail:latest
 
-# Run the server
+# Or pull a specific version
+docker pull isaacpeterson/naboomail:v1.0.0
+
+# Run the server (replace :latest with your desired tag if needed)
 docker run -d \
-  --name naboo-email \
+  --name naboomail \
   -p 50051:50051 \
   -e EMAIL_ADDRESS="your-email@example.com" \
   -e EMAIL_PWD="your-password" \
   -e SMTP_HOST="smtp.example.com" \
   -e SMTP_PORT="465" \
   -e POOL_SIZE="10" \
-  cifope/naboo-email:latest
+  isaacpeterson/naboomail:latest
 ```
 
 Available tags:
 - `latest` - Latest stable release
-- `1.0.0` - Specific version
-- `1.0` - Latest patch of minor version 1.0
-- `1` - Latest minor/patch of major version 1
+- `v1.0.0` - Specific pinned version
 
 ## Overview
 
@@ -93,7 +96,7 @@ See [Quick Start with Docker](#quick-start-with-docker) above.
 1. **Clone the Repository:**
 
 ```bash
-git clone https://github.com/lodjim/naboo-email.git
+git clone https://github.com/i2sac/naboo-email.git
 cd naboo-email
 ```
 
